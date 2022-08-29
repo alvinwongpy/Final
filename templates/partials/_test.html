@@ -1,0 +1,72 @@
+{% load static %}
+<section class="food_section layout_padding-bottom">
+    <div class="container">
+      <div class="heading_container heading_center">
+        <h2>
+          Our Menu
+        </h2>
+      </div>
+
+      <ul class="filters_menu">
+        <li class="active" data-filter="*">All</li>
+        {%  for type in types  %}
+        <li data-filter=".{{ type.lowercase }}">{{ type.type_name }}</li>
+        {% endfor %}        
+      </ul>
+
+      <div class="filters-content">
+        <div class="row grid">
+            {% for item in items  %}
+          <div class="col-sm-6 col-lg-4 all {{ item.lowercase }}">
+            <div class="box">
+              <div>
+                <div class="img-box">
+                  <img src="{{ item.item_photo.url }}" alt="">
+                </div>
+                <div class="detail-box">
+                  <h5>
+                    {{ item.item_name }}
+                  </h5>
+                  <p>
+                    {{  item.item_desciption  }}
+                  </p>
+                  <div class="options">
+                    <h5>
+                      ${{ item.price }}
+                    </h5>
+                    <!--shopping_cart icon-->
+                    <!--user is login -->
+                    {% if user.is_authenticated  %}
+                    <form id="myForm{{item.id}}" action="{% url 'cart' %}" method="POST">
+                      {% csrf_token %}
+                      <input name="itemID" value={{ item.id }} hidden>
+                      <input name="itemName" value="{{ item.item_name }}" hidden>
+                      <input name="itemPrice" value="{{ item.price }}" hidden>
+                      <input type ="number" name="orderQty" min="1" max="10" style="width:50px; position:relative; right:80px; top:35px; padding:0px; " >
+                      <a href="#" onclick="document.getElementById('myForm{{item.id}}').submit();">
+                        <!--it is able to display value on cart-->
+                      <i class="fa" style="position:relative; top: 3px; font-size:26px;" >&#xf07a;</i><span class='badge badge-danger' style="position:relative; top: -15px;" d='lblCartCount'></span>
+                      </a>
+                    </form>
+                    {% else %}
+                    <!--user has not login-->
+                    <a href="{%  url 'menu' %}">
+                        <!--it is able to display value on cart-->
+                      <i class="fa" style="font-size:25px; position:relative; right: -1px">&#xf07a;</i><span class='badge badge-danger' style="position:relative; top: -15px;" d='lblCartCount'></span>
+                    </a>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+            {% endfor %}
+        </div>
+      </div>
+      <div class="btn-box">
+        <a href="">
+          View More
+        </a>
+      </div>
+    </div>
+  </section>

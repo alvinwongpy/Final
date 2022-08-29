@@ -1,0 +1,59 @@
+{%  load static   %}
+<section class="slider_section ">
+<div class="login-page">
+    <div class="form">
+      <p><img src="{% static 'images/favicon.png' %}"  width="55" height="55" align="left"><h4>Welcome Register</h4></p>
+      <br>
+      <form action="{% url 'register' %}" class="register-form" method="POST">
+        {% csrf_token %} 
+        <input 
+        type="text"
+        name="first_name"
+        placeholder="Frist Name"
+        required/>
+
+        <input 
+        type="text" 
+        name="last_name"
+        placeholder="Last Name"
+        required/>
+
+        <input 
+        type="text" 
+        name="username"
+        placeholder="username"
+        required/>
+
+        <input 
+        type="password"
+        name="password"
+        placeholder="password"
+        required/>
+
+        <input 
+        type="password"
+        name="password2"
+        placeholder="re-type password"
+        required/>
+
+        <input 
+        type="email"
+        name="email" 
+        placeholder="email address"
+        required/>
+
+        <button type="submit" value="Register">Create</button>
+        
+        <br>
+        
+        <p class=".message">Already registered?&nbsp;<a href="{% url 'login' %}">Sign In</a></p>
+      </form>
+      <!--<form class="login-form">
+        <input type="text" placeholder="username"/>
+        <input type="password" placeholder="password"/>
+        <button>login</button>
+        <p class=".message">Not registered?<a href="#">Create an account</a></p>
+      </form>-->
+    </div>
+  </div>
+</section>

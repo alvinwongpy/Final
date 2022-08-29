@@ -1,0 +1,115 @@
+{%  load static %}
+<header class="header_section">
+    <div class="container">
+      <nav class="navbar navbar-expand-lg custom_nav-container ">
+        <a class="navbar-brand" href="{% url 'index' %}">
+          <p><img src="{% static  'images/favicon.png' %}"  width="50" height="50" align="left">
+          <span>
+            DRAGONBURG
+          </span>
+        </a>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class=""> </span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav  mx-auto ">
+            <li 
+                {% if '/' == request.path or 'index' in request.path %}
+                class="nav-item active"
+                {% else %}
+                class="nav-item"
+                {%  endif  %}
+            >
+             <a class="nav-link" href="{% url 'index' %}">Home{% if '/' == request.path or 'index' in request.path %}<span class="sr-only">(current){% else  %}{% endif %}</a>
+
+            </li>
+            <li 
+                {% if 'menu' in request.path %}
+                class="nav-item active"
+                {% else %}
+                class="nav-item"
+                {%  endif  %}
+            >
+              <a class="nav-link" href="{% url 'menu' %}">Menu{% if 'menu' in request.path %}<span class="sr-only">(current){% else  %}{% endif %}</a>
+            </li>
+            <li 
+                {% if 'about' in request.path %}
+                class="nav-item active"
+                {% else %}
+                class="nav-item"
+                {%  endif  %}
+            >
+              <!--<p style="color:white;">{{ request.path   }}</p>-->
+              <a class="nav-link" href="{% url 'about' %}">About{% if 'about' in request.path %}<span class="sr-only">(current){% else  %}{% endif %}</a>
+            </li>
+            <li 
+                {% if 'book' in request.path %}
+                class="nav-item active"
+                {% else %}
+                class="nav-item"
+                {%  endif  %}
+            >
+              <a class="nav-link" href="{% url 'book' %}">Book Table{% if 'book' in request.path %}<span class="sr-only">(current){% else  %}{% endif %}</a>
+            </li>
+          </ul>
+          <div class="user_option">
+
+            {% if user.is_authenticated  %}
+            <a href="{% url 'index'  %}" class="user_link" style="color:#ffbe33; 
+            font-size:12px" >{{ user.username }}<i class="fa fa-user fa-lg" 
+              style="color:yellow;" aria-hidden="true"></i>
+            </a>
+            {%  else   %}
+            <a href="{% url 'login'  %}" class="user_link">         
+              <i class="fa fa-user fa-lg" 
+              {%  if 'login' in request.path or 'register' in request.path  %}
+              style="color:yellow;"    
+              {% else %}
+              {% endif %}
+              aria-hidden="true"></i>
+            </a>
+            {% endif %}
+
+            <!--once login show logout logo-->
+            {% if user.is_authenticated  %}
+            <a href="javascript:{document.getElementById('logout').submit()}" class="user_link">
+              <i class="fas fa-sign-in-alt"></i>Logout
+            </a>
+            <form action="{% url 'logout' %}" method="POST" id="logout">
+            {% csrf_token %}
+            <input type="hidden">
+            </form>
+            {% else    %}
+            {% endif   %}
+
+
+
+            <!--shopping_cart icon-->
+            {% if user.is_authenticated %}
+            <a href="{%  url 'cart' %}" class="user_link">
+              <i class="fa" style="font-size:25px; position-top:-20px;">&#xf07a;</i>
+            <span class='badge badge-danger' style="position:relative; top: -15px;" id='lblCartCount'>
+            {{ qty_sum }}</span></a>
+            {% else  %}
+            <a href="{% url 'login' %}" class="user_link">
+            <i class="fa" style="font-size:25px; position-top:-20px;">&#xf07a;</i>
+            <span class='badge badge-danger' style="position:relative; top: -15px;"id='lblCartCount'></span></a>  
+            {% endif %} <!--<span class='badge badge-danger' style="position:relative; top: -15px;"id='lblCartCount'></span></a>-->
+           
+
+            <!--search icon-->
+            <form class="form-inline">
+              <button class="btn  my-2 my-sm-0 nav_search-btn" type="submit">
+                <i class="fa fa-search fa-lg" aria-hidden="true"></i>
+              </button>
+            </form>
+            <!--<a href="" class="order_online">
+              Order Online
+            </a>-->
+          </div>
+        </div>
+      </nav>
+    </div>
+  </header>

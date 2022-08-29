@@ -1,0 +1,11 @@
+{% extends 'test_base.html' %} <!--base.html include small header section-->
+{% load static %}
+{%  block content  %}
+
+  </div> <!--pair with <div class="hero_area"> in base.html-->
+  <br><br><br><br>
+
+  <!-- food section -->
+  {% include 'partials/_test.html' %}
+
+{% endblock %}

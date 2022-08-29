@@ -1,0 +1,126 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+  <!-- Basic -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <!-- Mobile Metas -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <!-- Site Metas -->
+  <meta name="keywords" content="" />
+  <meta name="description" content="" />
+  <meta name="author" content="" />
+
+  <!--favicon.png-->
+  <link rel="shortcut icon" href="{% static 'images/favicon.png' %}" type="">
+
+  <title>DRAGONBURG</title>
+
+  <!-- bootstrap core css -->
+  <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}" />
+
+  <!--owl slider stylesheet -->
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+  <!-- nice select  -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/css/nice-select.min.css" integrity="sha512-CruCP+TD3yXzlvvijET8wV5WxxEh5H8P4cmz0RFbKK6FlZ2sYl3AEsKlLPHbniXKSrDdFewhbmBK5skbdsASbQ==" crossorigin="anonymous" />
+  <!-- font awesome style -->
+  <link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet" />
+
+  <!--fontawesome icons-->
+  <!--<link href="https://use.fontawesome.com/releases/v5.0.1/css/all.css" rel="stylesheet">-->
+
+  <!-- Custom styles for this template -->
+  <link href="{% static 'css/style.css' %}" rel="stylesheet" />
+  <!-- responsive style -->
+  <link href="{% static 'css/responsive.css' %}" rel="stylesheet" />
+
+  <!--check if in register and then enable register style -->
+  <!--% if 'register' in request.path %-->
+  {% if 'register' in request.path %}             
+  <link href="{% static 'css/register.css' %}" rel="stylesheet" />
+  {%  else  %}
+  {%  endif %}
+
+  <!--check if in login and then enable login style -->
+  <!--% if 'login' in request.path %-->
+  {% if 'login' in request.path %}             
+  <link href="{% static 'css/login.css' %}" rel="stylesheet" />
+  {%  else  %}
+  {%  endif %}
+
+  <link href="{%  static  'css/cart.css' %}" rel="stylesheet" />
+
+  {% if 'accounts/login' in request.path   %}
+  <style>
+   body {
+
+    background-image: url ("{% static 'images/hero_bg.jpeg'%}");
+    background-repeat: repeat;
+    background-size: 50% 50%;
+
+  }
+  </style>
+  {%  else %}
+  {% endif %}
+
+</head>
+
+
+<body 
+{% if 'accounts/register' in request.path  %}
+{% elif 'accounts/login' in request.path   %}
+{% elif request.path != '/' %}
+class="sub_page"
+{% else %}
+{% endif %}
+>
+
+  <div class="hero_area">
+    <div class="bg-box">
+      <img src="{% static 'images/hero-bg.jpg' %}" alt="">
+    </div>
+    
+    <!--header section-->
+    {% include 'partials/_header.html' %}
+    
+    
+    {% block content %}{% endblock %}
+
+  <!-- footer section -->
+  {% include 'partials/_footer.html' %}
+  
+
+  <!--To adjust interval of slider ---->
+  <script>
+    $(document).ready(function(){
+      // Activate Carousel with a specified interval
+      $("#customCarousel1").carousel({interval: 10});});
+  </script>
+  <!-- in order to place special icon--->
+  <script src="https://kit.fontawesome.com/d23a749d1d.js" crossorigin="anonymous"></script>
+  <!-- jQery -->
+  <script src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
+  <!-- popper js -->
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+  </script>
+  <!-- bootstrap js -->
+  <script src="{% static 'js/bootstrap.js' %}"></script>
+  <!-- owl slider -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js">
+  </script>
+  <!-- isotope js -->
+  <script src="https://unpkg.com/isotope-layout@3.0.4/dist/isotope.pkgd.min.js"></script>
+  <!-- nice select -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/js/jquery.nice-select.min.js"></script>
+  <!-- custom js -->
+  <script src="{% static 'js/custom.js'%}"></script>
+  <!-- Google Map -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCh39n5U-4IoWpsVGUHWdqB6puEkhRLdmI&callback=myMap">
+  </script>
+  <!-- End Google Map -->
+
+</body>
+
+</html>
