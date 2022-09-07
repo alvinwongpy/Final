@@ -1,0 +1,52 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Django PDF</title>
+    <style>
+        th, td{
+            padding: 5px 15px;
+        }
+        th{
+            font-size: 20px;
+            font-weight: bold;
+        }
+        td{
+            font-size: 10px;
+        }
+        div{
+            position:relative;
+            right:-30px;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="text-align: center;" >List of States by respective Countries</h1>
+
+    <table border="1" style="border-collapse: collapse;" >
+        <thead>
+            <tr>
+                <td>Food Name</td>
+                <td>Food Price</td>
+                <td>Order Qty</td>
+                <td>SubTotal</td>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for cart_order_detail in cart_order_details %} 
+                <tr>
+                    <td>{{cart_order_detail.name}}</td>
+                    <td>{{cart_order_detail.price}}</td>
+                    <td>{{cart_order_detail.qty}}</td>
+                    <td>{{cart_order_detail.sub_total}}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>  
+    <div><p><h2>TOTAL :</h2><h2>{{ total }}</h2></p></div>  
+</body>
+</html>

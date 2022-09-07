@@ -16,7 +16,7 @@
   <!--favicon.png-->
   <link rel="shortcut icon" href="{% static 'images/favicon.png' %}" type="">
 
-  <title>Urban Burger</title>
+  <title>DRAGONBURG</title>
 
   <!-- bootstrap core css -->
   <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}" />
@@ -52,19 +52,6 @@
 
   <link href="{%  static  'css/cart.css' %}" rel="stylesheet" />
 
-  {% if 'accounts/login' in request.path   %}
-  <style>
-   body {
-
-    background-image: url ("{% static 'images/hero_bg.jpeg'%}");
-    background-repeat: repeat;
-    background-size: 50% 50%;
-
-  }
-  </style>
-  {%  else %}
-  {% endif %}
-
 </head>
 
 
@@ -91,12 +78,20 @@ class="sub_page"
   <!-- footer section -->
   {% include 'partials/_footer.html' %}
   
+  
 
-  <!--To adjust interval of slider ---->
+
+  <!--for search function of foods-->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script>
-    $(document).ready(function(){
-      // Activate Carousel with a specified interval
-      $("#customCarousel1").carousel({interval: 10});});
+      $(document).ready(function () {
+          $("#myInput").on("keyup", function () {
+              var value = $(this).val().toLowerCase();
+              $("#myList li").filter(function () {
+                  $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+              });
+          });
+      });
   </script>
   <!-- in order to place special icon--->
   <script src="https://kit.fontawesome.com/d23a749d1d.js" crossorigin="anonymous"></script>
@@ -120,7 +115,23 @@ class="sub_page"
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCh39n5U-4IoWpsVGUHWdqB6puEkhRLdmI&callback=myMap">
   </script>
   <!-- End Google Map -->
-
+  <!--To adjust interval of slider ---->
+  <script>
+    $(document).ready(function(){
+      // Activate Carousel with a specified interval
+      $("#customCarousel1").carousel({interval: 3000});});
+  </script>
+  <!---mouse over icon of bestselling to play YMCA-->
+  <script>
+    $( document ).ready(function() {
+   
+        $(".img-box").mouseover(function(){
+           var thisAudio = $(this).find("audio");
+           thisAudio[0].play();
+        });
+        
+    });
+  </script>
 </body>
 
 </html>

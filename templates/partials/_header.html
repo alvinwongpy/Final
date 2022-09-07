@@ -5,7 +5,7 @@
         <a class="navbar-brand" href="{% url 'index' %}">
           <p><img src="{% static  'images/favicon.png' %}"  width="50" height="50" align="left">
           <span>
-            Urban Burger
+            DRAGONBURG
           </span>
         </a>
 
@@ -97,14 +97,51 @@
             <i class="fa" style="font-size:25px; position-top:-20px;">&#xf07a;</i>
             <span class='badge badge-danger' style="position:relative; top: -15px;"id='lblCartCount'></span></a>  
             {% endif %} <!--<span class='badge badge-danger' style="position:relative; top: -15px;"id='lblCartCount'></span></a>-->
-           
 
+            
+            {%  if 'about' in request.path or 'book' in request.path or 'cart' in request.path or 'login' in request.path %}
+             <!--no search icon-->
+             {% else %}
             <!--search icon-->
             <form class="form-inline">
-              <button class="btn  my-2 my-sm-0 nav_search-btn" type="submit">
+              {% comment %} <button class="btn  my-2 my-sm-0 nav_search-btn" type="submit">
+                <i class="fa fa-search fa-lg" aria-hidden="true"></i>
+              </button> {% endcomment %}
+              <button type="button" class="btn  my-2 my-sm-0 nav_search-btn" data-toggle="modal" data-target="#exampleModal1">
                 <i class="fa fa-search fa-lg" aria-hidden="true"></i>
               </button>
+               <!-- Modal of add serach function  -->
+                <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Search</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                          <h2>Foods List</h2>
+                          <p>Type something in the input field to search the list for specific items:</p>  
+                          <input id="myInput" type="text" placeholder="Search..">
+                          <br>
+                          
+                          <ul id="myList">
+                            {% for item in items %}
+                              <li>{{item.item_name}}</li>
+                            {% endfor %}
+                          </ul>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
             </form>
+            <!--end of serach icon -->
+            {% endif %}
             <!--<a href="" class="order_online">
               Order Online
             </a>-->

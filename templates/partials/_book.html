@@ -1,8 +1,17 @@
 <section class="book_section layout_padding">
   <div class="container">
-    <div class="heading_container">
-      <h2>Book A Table</h2>
+    
+{% comment %} <div class="heading_container heading_center"> {% endcomment %}
+  <!--bs4 sticky-top-nav effect-->
+  <nav class="navbar justify-content-left navbar-expand-sm sticky-top navbar-light bg-light">
+    <div style="text-align: center;">
+      <span style="font-size:35px;">Book A Table</span>
+     <span style="color:blue">{% include 'partials/_alerts.html' %}</span>
     </div>
+  </nav>
+  {% comment %} </div> {% endcomment %}
+
+
     <div class="row">
       <div class="col-md-6">
         <div class="form_container">

@@ -56,7 +56,7 @@ def login(request):
         if user is not None:
             auth.login(request, user)
             messages.success(request, 'Hi, You are logging in !')
-            return redirect('index')
+            return redirect('menu')
         else:
             messages.error(request, 'Invalid credentials')
             return redirect('login')
@@ -67,9 +67,9 @@ def logout(request):
     if request.method == 'POST':
         auth.logout(request)
         messages.success( request, "you are now logging out !")
-        return redirect('index')
+        return redirect('menu')
             
 
-def test(request):
-    #return render(request,'pages/menu.html')
-    return redirect('menu')
+# def test(request):
+#     #return render(request,'pages/menu.html')
+#     return redirect('menu')

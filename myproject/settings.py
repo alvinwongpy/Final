@@ -34,8 +34,11 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'pages.apps.PagesConfig',
     'cart.apps.CartConfig',
+    'booktables.apps.BooktablesConfig',
     'accounts.apps.AccountsConfig',
     'menu_items.apps.MenuItemsConfig',
+    'slider.apps.SliderConfig',
+    'opinions.apps.OpinionsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -126,7 +129,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'myproject/static')]
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'myproject/static/')]
 
 # add media folder settings
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

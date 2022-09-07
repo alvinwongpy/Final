@@ -1,127 +1,238 @@
 {% load static %}
 <!DOCTYPE html>
 <html>
-<head>
-  <title>SHOPPING CART</title>
-  <meta charset="UTF-8">
-  <meta name="description" content="shopping cart">
+  <head>
+    <title>SHOPPING CART TESTING</title>
+    <meta charset="UTF-8" />
+    <meta name="description" content="shopping cart" />
 
-  <!-- bootstrap core css -->
-  <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}" />
-  <!--shopping_cart css-->
-  <link rel="stylesheet" href="{% static '/css/shopping_cart.css' %}">
+    <!-- bootstrap core css -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'css/bootstrap.css' %}"
+    />
+    <!--shopping_cart css-->
+    <link rel="stylesheet" href="{% static '/css/shopping_cart.css' %}" />
 
-  <!-- font awesome style -->
-  <link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet" />
+    <!-- font awesome style -->
+    <link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet" />
 
-  <!-- Custom styles for this template -->
-  <link href="{% static 'css/style.css' %}" rel="stylesheet" />
-  
-  <!-- responsive style -->
-  <link href="{% static 'css/responsive.css' %}" rel="stylesheet" />
+    <!-- Custom styles for this template -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet" />
 
-  <!--favicon.png-->
-  <link rel="shortcut icon" href="{% static 'images/favicon.png' %}" type="">
+    <!-- responsive style -->
+    <link href="{% static 'css/responsive.css' %}" rel="stylesheet" />
 
-</head>
+    <!--favicon.png-->
+    <link
+      rel="shortcut icon"
+      href="{% static 'images/favicon.png' %}"
+      type=""
+    />
+  </head>
 
-<body {% if request.path != '/' %}class="sub_page"{% else %}{% endif %}>
+  <body {% if request.path != '/' %}class="sub_page"{% else %}{% endif %}>
 
-  <div class="hero_area">
-    <div class="bg-box">
-      <img src="{% static 'images/hero-bg.jpg' %}" alt="">
+    <div class="hero_area">
+      <div class="bg-box">
+        <img src="{% static 'images/hero-bg.jpg' %}" alt="" />
+      </div>
+
+      <!--header section-->
+      {% include 'partials/_header.html' %}
     </div>
-    
-    <!--header section-->
-    {% include 'partials/_header.html' %}
-
-  </div>
-  <br>
-
-<h1>Food Order Payment Note to username:&nbsp;{{ username }}</h1><h2>&nbsp;&nbsp;email:&nbsp;{{ email }}</h2><h2>&nbsp;&nbsp;Date:&nbsp;{{ current_date }}</h2>
-<br><br>
-
-<div class="shopping-cart">
-
-  <div class="column-labels">
-    <label class="product-image">Image</label>
-    <label class="product-details">Product</label>
-    <label class="product-price">Price</label>
-    <label class="product-quantity">Quantity</label>
-    <!--<label class="product-removal">Remove</label>-->
-    <label class="product-line-price">Total</label>
-  </div>
-
-  {%  for cart_order_detail in cart_order_details %}
-  <div class="product">
-    <div class="product-image">
-      <img src="{{  cart_order_detail.photo.url  }}">
+    <br />
+    <div>
+    <h2><span style="display:inline;">Food Order Payment Note to username:&nbsp;<span  style="color:#ffbe33">{{ username }}</span><h2>
+    <h4><span style="style=display:inline;">&nbsp;Date:&nbsp;{{ current_date }}</span></h4>
     </div>
-    <div class="product-details">
-      <div class="product-title">{{  cart_order_detail.name }}</div>
-      <p class="product-description">{{ cart_order_detail.desc }}</p>
-    </div>
-    <div class="product-price">{{ cart_order_detail.price }}</div>
-    <div class="product-quantity">
-      <!--<input type="number" value="{{ cart_order_detail.qty }}" min="1">-->
-      {{ cart_order_detail.qty }}
-    </div>
-    <!--<div class="product-removal">
+    <br /><br />
+
+    <div class="shopping-cart">
+      <div class="column-labels">
+        <label class="product-image">Image</label>
+        <label class="product-details">Product</label>
+        <label class="product-price">Price</label>
+        <label class="product-quantity">Quantity</label>
+        <!--<label class="product-removal">Remove</label>-->
+        <label class="product-line-price">Total</label>
+      </div>
+
+      {% for cart_order_detail in cart_order_details %}
+      <div class="product">
+        <div class="product-image">
+          <img src="{{  cart_order_detail.photo.url  }}" />
+        </div>
+        <div class="product-details">
+          <div class="product-title">{{ cart_order_detail.name }}</div>
+          <p class="product-description">{{ cart_order_detail.desc }}</p>
+        </div>
+        <div class="product-price">{{ cart_order_detail.price }}</div>
+        <div class="product-quantity">
+          <!--<input type="number" value="{{ cart_order_detail.qty }}" min="1">-->
+          {{ cart_order_detail.qty }}
+        </div>
+        <!--<div class="product-removal">
       <button class="remove-product">
         Remove
       </button>
     </div>-->
-    <div class="product-line-price">{{ cart_order_detail.sub_total }}</div>
-  </div>
-  {%  endfor  %}
+        <div class="product-line-price">{{ cart_order_detail.sub_total }}</div>
+      </div>
+      {% endfor %}
 
+      <div class="totals">
+        <div class="totals-item">
+          <label>Subtotal</label>
+          <div
+            class="totals-value"
+            id="cart-subtotal"
+            style="position: relative; left: -130px"
+          >
+            {{ total }}
+          </div>
+        </div>
+        <div class="totals-item">
+          <label>Tax (5%)</label>
+          <div
+            class="totals-value"
+            id="cart-tax"
+            style="position: relative; left: -130px"
+          >
+            {{ tax_amount }}
+          </div>
+        </div>
+        <div class="totals-item totals-item-total">
+          <label>Grand Total</label>
+          <div
+            class="totals-value"
+            id="cart-total"
+            style="position: relative; left: -130px"
+          >
+            {{ total_include_tax }}
+          </div>
+        </div>
+      </div>
 
-  <div class="totals">
-    <div class="totals-item">
-      <label>Subtotal</label>
-      <div class="totals-value" id="cart-subtotal" style = "position:relative; left:-130px;">{{ total }}</div>
+     
+      <!-- Button trigger modal -->
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" 
+      style = "position:relative; right:-1200px;">
+      CHECKOUT
+      </button>
+      <!--<button class="checkout" style = "position:relative; left:-80px;">Checkout</button>-->
+          <!-- Modal -->
+          <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Hi&nbsp;{{ first_name }}&nbsp;{{ last_name }}</h5><br>
+                  <h5 class="modal-title" >&nbsp;, place order?</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                <form action="{% url 'cart_pdf' %}"  method="POST">
+                  {%  csrf_token  %}
+                  <div class="form-group">
+                    <label for="name" class="col-form-label">Please input your phone number:</label>
+                    <input type="text" name="phone" class="form-control" />
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                  <button type="submit" class="btn btn-primary">Confirm</button>
+                </div>
+              </form>
+              </div>
+            </div>
+          </div>
     </div>
-    <div class="totals-item">
-      <label>Tax (5%)</label>
-      <div class="totals-value" id="cart-tax" style = "position:relative; left:-130px;">{{ tax_amount }}</div>
-    </div>
-    <div class="totals-item totals-item-total">
-      <label>Grand Total</label>
-      <div class="totals-value" id="cart-total" style = "position:relative; left:-130px;">{{ total_include_tax }}</div>
-    </div>
-  </div>
+    <br />
+    <!-- footer section -->
+    {% include 'partials/_footer.html' %}
+
+    <!--A library to generate PDFs in JavaScript.-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <!--html2canvas-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.min.js"></script>
+    <!--it is PrevetBack after forward to next page -->
+    <script type="text/javascript">
+      function preventBack() {
+        window.history.forward();
+      }
       
-      <button class="checkout" style = "position:relative; left:-80px;">Checkout</button>
+      setTimeout("preventBack()", 0);
+      
+      window.onunload = function () { null };
+    </script>
+    {% comment %}
+    <script>
+      const page = document.getElementById('makepdf')
 
-</div>
-<br>
-<!-- footer section -->
-{% include 'partials/_footer.html' %}
+         $('#checkout').click(function () {
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="{% static '/js/shopping_cart.js' %}"></script>
+            html2canvas(page).then(async function (canvas) {
+              // convert canvas to image
+              let imgData = canvas.toDataURL('image/png');
 
-<!-- in order to place special icon--->
-<script src="https://kit.fontawesome.com/d23a749d1d.js" crossorigin="anonymous"></script>
-<!-- jQery -->
-<script src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
-<!-- popper js -->
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
-</script>
-<!-- bootstrap js -->
-<script src="{% static 'js/bootstrap.js' %}"></script>
-<!-- owl slider -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js">
-</script>
-<!-- isotope js -->
-<script src="https://unpkg.com/isotope-layout@3.0.4/dist/isotope.pkgd.min.js"></script>
-<!-- nice select -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/js/jquery.nice-select.min.js"></script>
-<!-- custom js -->
-<script src="{% static 'js/custom.js'%}"></script>
-<!-- Google Map -->
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCh39n5U-4IoWpsVGUHWdqB6puEkhRLdmI&callback=myMap">
-</script>
-<!-- End Google Map -->
-</body>
+              let imgWidth = 190; // image width (mm)
+              let pageHeight = imgWidth * 1.414;
+              let imgHeight = canvas.height * imgWidth / canvas.width;
+              let heightLeft = imgHeight;
+              let margin = 10;
+              let doc = new jsPDF('p', 'mm');
+              let position = 0;
+
+              doc.addImage(imgData, 'PNG', margin, position, imgWidth, imgHeight);
+              heightLeft -= pageHeight;
+
+              // if page > 1
+              while (heightLeft >= 20) {
+                position = heightLeft - imgHeight;
+                doc.addPage();
+                doc.addImage(imgData, 'PNG', margin, position, imgWidth, imgHeight);
+                heightLeft -= pageHeight;
+              }
+            )}
+
+
+
+            doc.save('hello_world.pdf');
+         })
+    </script>
+    {% endcomment %}
+
+    <!--jQery-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="{% static '/js/shopping_cart.js' %}"></script>
+    <!-- in order to place special icon--->
+    <script
+      src="https://kit.fontawesome.com/d23a749d1d.js"
+      crossorigin="anonymous"
+    ></script>
+    <!-- jQery -->
+    <script src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
+    <!-- popper js -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+      integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+      crossorigin="anonymous"
+    ></script>
+    <!-- bootstrap js -->
+    <script src="{% static 'js/bootstrap.js' %}"></script>
+    <!-- owl slider -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+    <!-- isotope js -->
+    <script src="https://unpkg.com/isotope-layout@3.0.4/dist/isotope.pkgd.min.js"></script>
+    <!-- nice select -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/js/jquery.nice-select.min.js"></script>
+    <!-- custom js -->
+    <script src="{% static 'js/custom.js'%}"></script>
+    <!-- Google Map -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCh39n5U-4IoWpsVGUHWdqB6puEkhRLdmI&callback=myMap"></script>
+    <!-- End Google Map -->
+  </body>
 </html>
