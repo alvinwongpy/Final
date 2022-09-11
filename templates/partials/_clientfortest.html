@@ -25,9 +25,12 @@
                   {{ opinion.customer_name }}
                 </p>
               </div>
+              {% if opinion.client_photo   %}
               <div class="img-box">
                 <img src="{{ opinion.client_photo.url }}" alt="" class="box-img">
               </div>
+              {%  else   %}
+              {% endif   %}
             </div>
           </div>
           {% endfor %}

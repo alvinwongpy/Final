@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'accounts.apps.AccountsConfig',
     'menu_items.apps.MenuItemsConfig',
     'slider.apps.SliderConfig',
+    'offers.apps.OffersConfig',
     'opinions.apps.OpinionsConfig',
     'django.contrib.admin',
     'django.contrib.auth',

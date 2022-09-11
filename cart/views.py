@@ -74,11 +74,10 @@ def cart(request):
                 
             }
                 
-            print(test)
+            #print(test)
             
             # auth_user has one and only one CartOder 
-            # and no more than one CartOder forever 
-            # even login again to be deal with the same one CartOder
+            # and no more than one CartOder forever even login again
             # it is wanted  that CartOder is designed as a notes record 
             # for user to select items for management of user's ordering 
             
@@ -100,6 +99,7 @@ def cart(request):
                 
                 else: # cart_order_details not exist
                     
+                    # cart_order to cart_order_detail <---> one to many
                     cart_order_detail = CartOrderDetail(
                         cartorder_id = cart_order.pk,
                         item_id = itemID,
@@ -133,14 +133,9 @@ def cart(request):
                 cart_order_details = CartOrderDetail.objects.filter(cartorder_id =cart_order.pk).values()
                 
             
-            items = Item.objects.filter(is_displayed=True).values()
+            #items = Item.objects.filter(is_displayed=True).values()
+            #print(items)
             
-            print(items)
-            
-            #for item in items:
-            #    lowercase = item.type.type_name
-            #    lowercase = lowercase.lower()
-            #    setattr(item, 'lowercase', lowercase)
             qty_sum=0
             for cart_order_detail in cart_order_details:
                 item_id = cart_order_detail['item_id']
@@ -172,10 +167,7 @@ def cart(request):
             tax_amount = "{:.2f}".format(tax_amount)
             total_include_tax = "{:.2f}".format(total_include_tax)
                 
-                 
-                #selected_item = items.objects.filter(pk=cart_order_detail.item_id)
-                #photo = selected_item.item_photo 
-                #setattr(cart_order_detail, 'photo', photo)
+
             
             current_user = request.user
             username = current_user.username
@@ -286,9 +278,6 @@ def cart(request):
         return render(request,'login')
 
 
-def cart_test(request):
-    return
-
 def cart_pdf(request):
     
     if request.method == 'POST':
@@ -378,8 +367,8 @@ def cart_pdf(request):
                                     "phone"        : UserPhone,
                                    
                 }
-                messages.success(request, "Please pay this invoice. Thank you")
-                return render(request, 'accounts/test_pdf.html', context)
+                messages.success(request, "Invoice by email Please check. Thank you")
+                return render(request, 'accounts/invoice_pdf.html', context)
         
         else: # POST with confirm order but no phone number input
             

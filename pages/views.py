@@ -5,11 +5,15 @@ from menu_items.models import Type
 from menu_items.models import Item
 from slider.models import Slider
 from opinions.models import Opinion
+from offers.models import Offer
+from django.http import FileResponse, Http404
+
 
 
 def index(request):
-    
+               
     # example: entry = Entry.objects.get(pk=1)
+    # slider panel content control
     slider1 = Slider.objects.get(pk=1)
     slider2 = Slider.objects.get(pk=2)
     slider3 = Slider.objects.get(pk=3)
@@ -19,8 +23,13 @@ def index(request):
     slider3=str(slider3.slider)
     
     # example : desks = Desk.objects.all()
-    opinions = Opinion.objects.all()
+    # example : items = Item.objects.filter(is_displayed=True).all()
+     # opinions panel content control
+    opinions = Opinion.objects.filter(is_published=True).all()     
     
+    # offer panel content control
+    offers = Offer.objects.filter(is_posted=True).all()
+
     #call function to get types data and items data
     types, items = generate_data()
     
@@ -32,6 +41,8 @@ def index(request):
             'slider2' : slider2,
             'slider3' : slider3,
             'opinions' : opinions,
+            'offers': offers,
+           
     }
     print(context) 
     return render(request, 'pages/index.html', context)
@@ -91,3 +102,12 @@ def generate_data():
   
     
     return types,items
+
+
+# open pdf function ref : https://thewebdev.info/2022/04/04/how-to-show-a-pdf-file-in-a-python-django-view/  
+def pdf_view(request):
+    try:
+        return FileResponse(open('foobar.pdf', 'rb'), content_type='application/pdf')
+    except FileNotFoundError:
+        raise Http404()
+    

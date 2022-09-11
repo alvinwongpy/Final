@@ -127,8 +127,12 @@ def booktable(request):
         
         print(test)
         
+        # example 
+        # date_time = datetime.datetime(**date)
+        # date_time = date_time.strftime("%m/%d/%Y %I:%M %p")
         IST = pytz.timezone('Asia/Hong_Kong')
-        date_time = str(datetime.now(IST))
+        date_time = datetime.now(IST)
+        date_time = date_time.strftime("%m/%d/%Y %I:%M %p")
         bookdata = Client_booking(client_name=client_name,phone=client_phone,email=client_email,person_num=person_num,
                                   book_date=book_date,book_time=book_time,is_booked=False,is_reserved=False,is_released=False,
                                   is_canceled=False,is_finished=False,request_datetime= date_time)

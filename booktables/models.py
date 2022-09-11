@@ -1,6 +1,6 @@
 from django.db import models
 from datetime import datetime
-
+from twilio.rest import Client
 
 class Desk(models.Model):
     desk_id = models.AutoField(primary_key=True)
@@ -41,11 +41,12 @@ class Tablestatu(models.Model):
     def __str__(self):        
         list_time = ["6:00PM","7:00PM","8:00PM","9:00PM"]
         day_time=list_time[self.day_time-1]
-        if self.is_available == True:
+        if self.is_available == False and self.is_reserved == True:
+            return "Desk: No."+str(self.Desk.pk)+" , Seat No.: "+str(self.Desk.seats)+"  , the desk statu by that date and time: "+str(self.statuoftime)+"  , "+str(day_time)+"      (RESERVED)"
+        else:
+            
             available = "Yes"
-            return "Desk: No."+str(self.Desk.pk)+" , Seat No.: "+str(self.Desk.seats)+"  , Desk statu by that date and time: "+str(self.statuoftime)+"  , "+str(day_time)+"  , Available: "+available 
-        elif self.is_available == False and self.is_reserved == True:
-            return "Desk: No."+str(self.Desk.pk)+" , Seat No.: "+str(self.Desk.seats)+"  , Desk statu by that date and time: "+str(self.statuoftime)+"  , "+str(day_time)+"      (RESERVED)"
+            return "Desk: No."+str(self.Desk.pk)+" , Seat No.: "+str(self.Desk.seats)+"  , the desk statu by that date and time: "+str(self.statuoftime)+"  , "+str(day_time)+"  , Available: "+available 
        
     
 class Client_booking(models.Model):
@@ -78,10 +79,17 @@ class Client_booking(models.Model):
         return str(self.client_name)+" requested  "+ str(self.person_num)+ " persons of desk, booking date: "+str(self.book_date)+" , booking time: "+ str(book_time)+" , the request on datetime: "+str(self.request_datetime)
 
 class Reservation(models.Model):
-    client_booking = models.ForeignKey(Client_booking, on_delete=models.DO_NOTHING)
-    tablestatu = models.ForeignKey(Tablestatu, on_delete=models.DO_NOTHING)
+    client_booking = models.OneToOneField(Client_booking, on_delete=models.DO_NOTHING)
+    tablestatu = models.OneToOneField(Tablestatu, on_delete=models.DO_NOTHING)
     client_confirm_time = models.DateTimeField(blank=True)
     is_OK = models.BooleanField(default=False)
     
-    def __str__(self):
+    def __str__(self):                
         return str(self.client_booking)+" ,  Confirm on date: "+str(self.client_confirm_time)+" ,  "+str(self.tablestatu)
+
+# example:
+# place = models.OneToOneField(
+#         Place,
+#         on_delete=models.CASCADE,
+#         primary_key=True,
+#     )

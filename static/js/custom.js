@@ -32,7 +32,7 @@ $(window).on('load', function () {
 //To adjust slider interval
 $(document).ready(function(){
     // Activate Carousel with a specified interval
-    $("#customCarousel1").carousel({interval: 1000});
+    $("#customCarousel1").carousel({interval: 3000});
 });
 
 
