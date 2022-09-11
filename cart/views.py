@@ -86,7 +86,7 @@ def cart(request):
                 # cart order exist
                 cart_order = CartOrder.objects.get(user_id = userID)
                 
-                print(cart_order.pk)
+                #print(cart_order.pk)
                 
                 if CartOrderDetail.objects.filter(cartorder_id =cart_order.pk, item_id=itemID).exists():
                     
@@ -95,7 +95,7 @@ def cart(request):
                     cart_order_detail.save()
     
                     cart_order_details = CartOrderDetail.objects.filter(cartorder_id =cart_order.pk).values()
-                    print(cart_order_details)
+                    #print(cart_order_details)
                 
                 else: # cart_order_details not exist
                     
@@ -173,6 +173,8 @@ def cart(request):
             username = current_user.username
             email = current_user.email
             current_date = datetime.date.today() 
+            first_name = current_user.first_name
+            last_name = current_user.last_name
                 
             context = {
                 
@@ -183,11 +185,13 @@ def cart(request):
                 "total" : total,
                 "username" : username,
                 "email" : email,
-                "current_date" : current_date
+                "current_date" : current_date,
+                "first_name"   : first_name,
+                "last_name"    : last_name,
             
             }
             
-            print(context)
+            #print(context)
             
             return render(request, 'accounts/shopping_cart.html', context)
         
@@ -202,11 +206,11 @@ def cart(request):
                 # user has login but not POST data and user has cart order 
                 cart_order = CartOrder.objects.get(user_id = userID)
                 
-                print(cart_order.pk)
+                #print(cart_order.pk)
                 
                 cart_order_details = CartOrderDetail.objects.filter(cartorder_id =cart_order.pk).values()
                 
-                print(cart_order_details)
+                #print(cart_order_details)
                 
                 if cart_order_details.exists(): # cart_order_details exists
                     
@@ -228,7 +232,7 @@ def cart(request):
                         sub_total = qty*price
                         cart_order_detail['sub_total'] = sub_total 
                     
-                    print(qty_sum)
+                    #print(qty_sum)
                     
                      # total $ for the whole cart order 
                     total=0    
@@ -251,6 +255,7 @@ def cart(request):
                     email = current_user.email
                     first_name = current_user.first_name
                     last_name = current_user.last_name
+                    
                                     
                     current_date = datetime.date.today() 
                     
@@ -287,11 +292,15 @@ def cart_pdf(request):
         if UserPhone :
         
                 current_user = request.user
+                username = current_user.username
+                email = current_user.email
+                first_name = current_user.first_name
+                last_name = current_user.last_name
                 userID = current_user.id
                 # user has login but not POST data and user has cart order 
                 cart_order = CartOrder.objects.get(user_id = userID)
                             
-                print(cart_order.pk)
+                #print(cart_order.pk)
                 
                 cart_order_details = CartOrderDetail.objects.filter(cartorder_id =cart_order.pk)
                 
@@ -303,7 +312,7 @@ def cart_pdf(request):
                             
                 cart_order_details = CartOrderDetail.objects.filter(cartorder_id =cart_order.pk).values()
                             
-                print(cart_order_details)
+                #print(cart_order_details)
                                             
                 items = Item.objects.filter(is_displayed=True).values()
                                 
@@ -325,7 +334,7 @@ def cart_pdf(request):
                     
                 
                                 
-                print(qty_sum)
+                #print(qty_sum)
                                 
                 # total $ for the whole cart order 
                 total=0    
@@ -342,15 +351,15 @@ def cart_pdf(request):
                 tax_amount = "{:.2f}".format(tax_amount)
                 total_include_tax = "{:.2f}".format(total_include_tax) 
                                 
-                current_user = request.user
-                username = current_user.username
-                email = current_user.email
-                first_name = current_user.first_name
-                last_name = current_user.last_name
+                # current_user = request.user
+                # username = current_user.username
+                # email = current_user.email
+                # first_name = current_user.first_name
+                # last_name = current_user.last_name
                                 
                 current_date = datetime.date.today() 
                 
-                print(cart_order_details)
+                #print(cart_order_details)
                                 
                 context = {
                                     "cart_order_details" : cart_order_details, 

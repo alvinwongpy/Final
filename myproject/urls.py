@@ -18,6 +18,10 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
+admin.site.site_header  =  "DRAGONBURG admin"  
+admin.site.site_title  =  "DRAGONBURG admin site"
+admin.site.index_title  =  "Welcome to DRAGONBURG Admin"
+
 urlpatterns = [
     path("", include('pages.urls')),
     path("book/", include('booktables.urls')),

@@ -44,7 +44,7 @@ def index(request):
             'offers': offers,
            
     }
-    print(context) 
+    #print(context) 
     return render(request, 'pages/index.html', context)
 
 

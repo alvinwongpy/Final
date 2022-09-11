@@ -1,6 +1,8 @@
 from django.db import models
 from datetime import datetime
 from twilio.rest import Client
+import os
+from twilio.rest import Client
 
 class Desk(models.Model):
     desk_id = models.AutoField(primary_key=True)
@@ -84,7 +86,17 @@ class Reservation(models.Model):
     client_confirm_time = models.DateTimeField(blank=True)
     is_OK = models.BooleanField(default=False)
     
-    def __str__(self):                
+    def __str__(self): 
+        account_sid = os.environ['TWILIO_ACCOUNT_SID']
+        auth_token = os.environ['TWILIO_AUTH_TOKEN']
+        client = Client(account_sid, auth_token)
+        call = client.calls.create(
+                                twiml='<Response><Say>'+self.client_booking.client_name+',confirm your booking</Say></Response>',
+                                to='+852'+ self.client_booking.phone,
+                                from_='+85230013654'
+                            )
+
+        print(call.sid)             
         return str(self.client_booking)+" ,  Confirm on date: "+str(self.client_confirm_time)+" ,  "+str(self.tablestatu)
 
 # example:

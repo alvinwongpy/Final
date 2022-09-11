@@ -1,8 +1,9 @@
 {%  load static   %}
 <section class="slider_section ">
 <div class="login-page">
+  <span style="color:yellow">{% include 'partials/_alerts.html' %}</span>
     <div class="form">
-      <p><img src="{% static 'images/favicon.png' %}"  width="55" height="55" align="left"><h4>Welcome Login</h4></p>
+      <p><img src="{% static 'images/favicon.png' %}"  width="70" height="70" align="left"><h4>Welcome Login</h4></p>
       <br>
       <form action="{% url 'login' %}" class="login-form" method="POST">
         {% csrf_token %} 
