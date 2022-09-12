@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-vof7-r_pgegbu32p3ojv(*^f3&7yjog5n^-=o($q95p#9qy%ku
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -90,7 +90,6 @@ DATABASES = {
 }
 
 
-
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 
@@ -137,9 +136,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
 # message , error ---> bootstrap danger color
-#MESSAGE_TAGS = {
-    #messages.ERROR: 'danger'
-#}
+# MESSAGE_TAGS = {
+#messages.ERROR: 'danger'
+# }
 
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
