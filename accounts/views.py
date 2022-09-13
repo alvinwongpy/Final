@@ -55,8 +55,8 @@ def login(request):
         # if not match then return None
         if user is not None:
             auth.login(request, user)
-            datafield = User._meta.get_fields()
-            print(datafield)
+            #datafield = User._meta.get_fields()
+            #print(datafield)
             messages.success(request, 'Hi, You are logging in !')
             return redirect('menu')
         else:

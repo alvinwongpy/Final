@@ -55,12 +55,16 @@ def index(request):
 #To creat one week of statu of table
 def run(request):
     
-    for day in range(5,13):                             # for each day
-        for desk in range(1,7):                         # for each desk
-                for i in range(1,5):                    # for each booking time
+    #clear old list of table statu
+    Tablestatu.objects.all().delete()
+    
+    #Create new list of table statu 
+    for day in range(0,8):                       # for each day
+        for desk in range(1,7):                  # for each desk
+                for i in range(1,5):             # for each booking time
                     Desk_id = desk
-                    timeofstatu = date(2022, 9, 5)      # update statu on that date
-                    statuoftime = date(2022, 9, day)    # update what time of statu
+                    timeofstatu = date.today()                     # update statu on that date
+                    statuoftime = date.today()+timedelta(days=day) # update what time of statu
                     week_day = 1 
                     day_time = i 
                     is_available = True 
@@ -78,6 +82,7 @@ def run1(request): #
     # Example: MyModel.objects.filter(pk=1).delete()
     Tablestatu.objects.filter(statuoftime=date.today()-timedelta(days=1)).delete()
     last_day = Tablestatu.objects.aggregate(Max('statuoftime'))
+    #first_day = Tablestatu.objects.aggregate(Min('statuofime'))
     last_day = last_day['statuoftime__max'] + timedelta(days=1)
     
     for desk in range(1,7):                         # for each desk
@@ -101,7 +106,7 @@ def test(request):
     #Example: from django.db.models import Max
     #Example: Book.objects.aggregate(Max('price'))
     table_statu_reocrd = Tablestatu.objects.aggregate(Max('statuoftime'))
-    print(table_statu_reocrd)   
+    #print(table_statu_reocrd)   
     template = loader.get_template('book.html')
     return HttpResponse(template.render({}, request))
 
@@ -125,7 +130,7 @@ def booktable(request):
                 
             }
         
-        print(test)
+        #print(test)
         
         # example 
         # date_time = datetime.datetime(**date)

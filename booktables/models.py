@@ -1,8 +1,16 @@
 from django.db import models
-from datetime import datetime
-from twilio.rest import Client
+from datetime import datetime, timedelta
+# for working function of twilio 
 import os
 from twilio.rest import Client
+# signals import
+from django.conf import settings
+from django.dispatch import receiver
+from django.db.models.signals import (
+post_save,
+pre_save
+)
+import pytz
 
 class Desk(models.Model):
     desk_id = models.AutoField(primary_key=True)
@@ -87,17 +95,33 @@ class Reservation(models.Model):
     is_OK = models.BooleanField(default=False)
     
     def __str__(self): 
-        account_sid = os.environ['TWILIO_ACCOUNT_SID']
-        auth_token = os.environ['TWILIO_AUTH_TOKEN']
-        client = Client(account_sid, auth_token)
-        call = client.calls.create(
-                                twiml='<Response><Say>'+self.client_booking.client_name+',confirm your booking</Say></Response>',
-                                to='+852'+ self.client_booking.phone,
-                                from_='+85230013654'
-                            )
-
-        print(call.sid)             
+        #.strftime("%m/%d/%Y %I:%M %p")
+        self.client_confirm_time = self.client_confirm_time+timedelta(hours=8)  
+        self.client_confirm_time = self.client_confirm_time.strftime("%m/%d/%Y %I:%M %p")
         return str(self.client_booking)+" ,  Confirm on date: "+str(self.client_confirm_time)+" ,  "+str(self.tablestatu)
+
+@receiver(post_save, sender=Reservation)
+def reservation_post_save_receiver(sender, instance, created, *args, **kwargs):
+	if created:
+            account_sid = os.environ['TWILIO_ACCOUNT_SID']
+            auth_token = os.environ['TWILIO_AUTH_TOKEN']
+            client = Client(account_sid, auth_token)
+            call = client.calls.create(
+                                    twiml='<Response><Say>'+instance.client_booking.client_name+',your booking is confirmed</Say></Response>',
+                                    to='+852'+ instance.client_booking.phone,
+                                    from_='+85230013654'
+                                )
+
+            print(call.sid)
+
+
+# @receiver(post_save, sender=model)
+# def xxx_yyy_post_save_receiver(sender, instance, created, *args, **kwargs):
+# 	if created:
+# 		print("send eamil to",instance.field)
+# 	else:
+# 		print(instance.field, "was just saved")
+
 
 # example:
 # place = models.OneToOneField(

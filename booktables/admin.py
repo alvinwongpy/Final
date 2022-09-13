@@ -3,6 +3,8 @@ from .models import Desk
 from .models import Reservation
 from .models import Tablestatu
 from .models import Client_booking
+from datetime import timedelta
+from django.contrib import admin
 
 
 admin.site.register(Client_booking)

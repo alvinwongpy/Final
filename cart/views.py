@@ -26,7 +26,8 @@ from django.template.loader import render_to_string
 # import io as StringIO
 # from io import BytesIO
 # import cgi
-# import os
+import os
+from twilio.rest import Client
 
 
 def cart(request):
@@ -289,7 +290,7 @@ def cart_pdf(request):
         
         UserPhone = request.POST['phone']
         
-        if UserPhone :
+        if UserPhone : 
         
                 current_user = request.user
                 username = current_user.username
@@ -297,6 +298,18 @@ def cart_pdf(request):
                 first_name = current_user.first_name
                 last_name = current_user.last_name
                 userID = current_user.id
+                
+                account_sid = os.environ['TWILIO_ACCOUNT_SID']
+                auth_token = os.environ['TWILIO_AUTH_TOKEN']
+                client = Client(account_sid, auth_token)
+                call = client.calls.create(
+                                        twiml='<Response><Say>'+first_name+" "+last_name+' , please pay your invoice. Thank you</Say></Response>',
+                                        to='+852'+ UserPhone,
+                                        from_='+85230013654'
+                                    )
+
+                print(call.sid)  
+                
                 # user has login but not POST data and user has cart order 
                 cart_order = CartOrder.objects.get(user_id = userID)
                             
@@ -376,7 +389,8 @@ def cart_pdf(request):
                                     "phone"        : UserPhone,
                                    
                 }
-                messages.success(request, "Invoice by email Please check. Thank you")
+                
+                messages.success(request, "Please pay invoice by INTERAC. Thank you!")
                 return render(request, 'accounts/invoice_pdf.html', context)
         
         else: # POST with confirm order but no phone number input

@@ -1,15 +1,7 @@
 {% load static %}
 <!DOCTYPE html>
 <html>
-  <div id="google_translate_element"></div>
 
-  <script type="text/javascript">
-  function googleTranslateElementInit() {
-    new google.translate.TranslateElement({pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL}, 'google_translate_element');
-  }
-  </script>
-  
-  <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 <head>
   <!-- Basic -->
   <meta charset="utf-8" />
@@ -64,8 +56,8 @@
 
 
 <body 
-{% if 'accounts/register' in request.path %}
-{% elif 'accounts/login' in request.path %}
+{% if 'accounts/register' in request.path  %}
+{% elif 'accounts/login' in request.path   %}
 {% elif request.path != '/' %}
 class="sub_page"
 {% else %}

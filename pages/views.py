@@ -7,6 +7,7 @@ from slider.models import Slider
 from opinions.models import Opinion
 from offers.models import Offer
 from django.http import FileResponse, Http404
+import os
 
 
 
@@ -105,9 +106,10 @@ def generate_data():
 
 
 # open pdf function ref : https://thewebdev.info/2022/04/04/how-to-show-a-pdf-file-in-a-python-django-view/  
-def pdf_view(request):
+def pdf_view(response):
     try:
-        return FileResponse(open('foobar.pdf', 'rb'), content_type='application/pdf')
+        filepath = os.path.join('static', 'menu.pdf')
+        response = FileResponse(open(filepath, 'rb'), content_type='application/pdf')  
+        return response      
     except FileNotFoundError:
         raise Http404()
-    
