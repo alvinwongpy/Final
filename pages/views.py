@@ -50,8 +50,7 @@ def index(request):
 
 
 def about(request):
-    template = loader.get_template('pages/about.html')
-    return HttpResponse(template.render({}, request))
+    return render(request, 'pages/about.html')
 
 def book(request):
     #template = loader.get_template('pages/book.html')
@@ -113,3 +112,9 @@ def pdf_view(response):
         return response      
     except FileNotFoundError:
         raise Http404()
+
+# def error_404_view(request, exception):
+   
+#     # we add the path to the the 404.html file
+#     # here. The name of our HTML file is 404.html
+#     return render(request, 'pages/404.html')

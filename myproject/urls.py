@@ -14,18 +14,28 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
+from django.conf.urls import url
 from django.urls import path, include
 from django.conf import settings
-from django.conf.urls.static import static
+#from django.conf.urls.static import static
+from django.views.static import serve
+from django.conf.urls import handler404, handler500
+
+
 
 admin.site.site_header  =  "DRAGONBURG admin"  
 admin.site.site_title  =  "DRAGONBURG admin site"
 admin.site.index_title  =  "Welcome to DRAGONBURG Admin"
 
 urlpatterns = [
+    url(r'^media/(?P<path>.*)$', serve,{'document_root': settings.MEDIA_ROOT}),
+    url(r'^static/(?P<path>.*)$', serve,{'document_root': settings.STATIC_ROOT}),
     path("", include('pages.urls')),
     path("book/", include('booktables.urls')),
     path("cart/", include('cart.urls')),
     path("accounts/", include('accounts.urls')),
     path("admin/", admin.site.urls),
-]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]
+
+#handler404 = "myproject.views.page_not_found_view"
+handler404 = 'myproject.views.error_404_view'

@@ -25,13 +25,13 @@ class Tablestatu(models.Model):
     statuoftime = models.DateField(blank=True) 
     week_day = models.PositiveSmallIntegerField(
     choices=(
-        (1, "Monday"),
-        (2, "Tuesday"),
-        (3, "Wednesday"),
-        (4, "Thursday "),
-        (5, "Friday"),
-        (6, "Saturday"),
-        (7, "Sunday") 
+        (0, "Monday"),
+        (1, "Tuesday"),
+        (2, "Wednesday"),
+        (3, "Thursday "),
+        (4, "Friday"),
+        (5, "Saturday"),
+        (6, "Sunday") 
         )
     )
     day_time =  models.PositiveSmallIntegerField(
@@ -96,8 +96,8 @@ class Reservation(models.Model):
     
     def __str__(self): 
         #.strftime("%m/%d/%Y %I:%M %p")
-        self.client_confirm_time = self.client_confirm_time+timedelta(hours=8)  
-        self.client_confirm_time = self.client_confirm_time.strftime("%m/%d/%Y %I:%M %p")
+        self.client_confirm_time = self.client_confirm_time+timedelta(hours=8)
+        #self.client_confirm_time = self.client_confirm_time.strftime("%m/%d/%Y %I:%M %p")
         return str(self.client_booking)+" ,  Confirm on date: "+str(self.client_confirm_time)+" ,  "+str(self.tablestatu)
 
 @receiver(post_save, sender=Reservation)

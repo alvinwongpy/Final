@@ -24,9 +24,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-vof7-r_pgegbu32p3ojv(*^f3&7yjog5n^-=o($q95p#9qy%ku'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -129,12 +129,17 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'myproject/static/')]
+MEDIA_URL = '/media/'
 
+if DEBUG:
+    STATICFILES_DIRS = [os.path.join(BASE_DIR, 'myproject/static/')]
+else:
+    STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+#STATICFILES_DIRS = [os.path.join(BASE_DIR, 'myproject/static/')]
 # add media folder settings
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = '/media/'
+#MEDIA_URL = '/media/'
 
 # message , error ---> bootstrap danger color
 #MESSAGE_TAGS = {

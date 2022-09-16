@@ -59,13 +59,14 @@ def run(request):
     Tablestatu.objects.all().delete()
     
     #Create new list of table statu 
-    for day in range(0,8):                       # for each day
+    for day in range(0,7):                       # for each day
         for desk in range(1,7):                  # for each desk
                 for i in range(1,5):             # for each booking time
                     Desk_id = desk
                     timeofstatu = date.today()                     # update statu on that date
                     statuoftime = date.today()+timedelta(days=day) # update what time of statu
-                    week_day = 1 
+                    week_day = datetime.today()+timedelta(days=day)
+                    week_day = week_day.weekday()
                     day_time = i 
                     is_available = True 
                     is_reserved = False 
@@ -90,7 +91,7 @@ def run1(request): #
                 Desk_id = desk
                 timeofstatu = date.today()      # update statu on that date
                 statuoftime = last_day      # update what time of statu
-                week_day = 1 
+                week_day = last_day.weekday()
                 day_time = i 
                 is_available = True 
                 is_reserved = False 
